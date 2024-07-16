@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+  hyperagi-inference-chat:
+    image: hyperagi/hyperagi-inference:latest
+    container_name: hyperagi-inference-chat-container
+    ports:
+      - "5200:5200"
+    environment:
+      - PUBLIC_IP=${PUBLIC_IP}
+      - WALLET_ADDRESS=${WALLET_ADDRESS}
+      - SCRIPT_NAME=inference_chat.py
+      - MODEL_NAME=HyperdustProtocol/ImHyperAGI-cog-llama2-7b-5908
+      - SERVICE_NAME=hyperAGI-trust-inference-chat
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  hyperagi-inference-instruction:
+    image: hyperagi/hyperagi-inference:latest
+    container_name: hyperagi-inference-instruction-container
+    ports:
+      - "5100:5100"
+    environment:
+      - PUBLIC_IP=${PUBLIC_IP}
+      - WALLET_ADDRESS=${WALLET_ADDRESS}
+      - SCRIPT_NAME=inference_instruction.py
+      - MODEL_NAME=HyperdustProtocol/HyperAuto-cog-llama2-7b-3752
+      - SERVICE_NAME=hyperAGI-trust-inference
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
